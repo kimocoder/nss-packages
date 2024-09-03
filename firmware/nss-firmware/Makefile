@@ -57,7 +57,7 @@ endef
 
 define Package/nss-firmware-ipq5018
 $(Package/nss-firmware-default)
-	IPQ_PLATFORM=IPQ5018 
+	IPQ_PLATFORM=IPQ5018
 	DEPENDS+= @(TARGET_qualcommax_ipq50xx||TARGET_qualcommax_ipq50xx_32) +nss-firmware-default
 	NSS_SOC:=MP
 endef
