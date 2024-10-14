@@ -57,7 +57,7 @@ proto_quectel_setup() {
 			json_get_var cell_lock $idx
 			pci=$(echo $cell_lock | cut -d',' -f1)
 			earfcn=$(echo $cell_lock | cut -d',' -f2)
-			cell_ids="$cell_ids,$earfcn,$pci" 
+			cell_ids="$cell_ids,$earfcn,$pci"
 			idx=$(( idx + 1 ))
 		done
 		idx=$(( idx - 1 ))
@@ -118,12 +118,12 @@ proto_quectel_setup() {
 	else
 		quectel-cm -i "$ifname" $ipv4opt $ipv6opt ${pincode:+-p $pincode} -s "$apn" "$username" "$password" "$auth" &
 	fi
-	
+
 	sleep 5
 
 	ifconfig "$ifname" up
 	ifconfig "${ifname}_1" &>"/dev/null" && ifname4="${ifname}_1"
-	
+
 	if [ "$multiplexing" = 1 ]; then
 		ifconfig "${ifname}_2" &>"/dev/null" && ifname6="${ifname}_2"
 	else
@@ -148,7 +148,7 @@ proto_quectel_setup() {
 
 		json_init
 		json_add_string name "${interface}_6"
-		json_add_string device "$ifname6"
+		json_add_string ifname "@$interface"
 		[ "$pdptype" = "ipv4v6" ] && json_add_string iface_464xlat "0"
 		json_add_string proto "dhcpv6"
 		proto_add_dynamic_defaults
@@ -165,7 +165,7 @@ proto_quectel_setup() {
 	if [ "$pdptype" = "ipv4" ] || [ "$pdptype" = "ipv4v6" ]; then
 		json_init
 		json_add_string name "${interface}_4"
-		json_add_string device "$ifname4"
+		json_add_string ifname "@$interface"
 		json_add_string proto "dhcp"
 		[ -z "$ip4table" ] || json_add_string ip4table "$ip4table"
 		proto_add_dynamic_defaults
