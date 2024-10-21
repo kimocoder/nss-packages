@@ -24,8 +24,7 @@ PKG_CONFIG_DEPENDS:= \
 	CONFIG_NSS_FIRMWARE_VERSION_11_4 \
 	CONFIG_NSS_FIRMWARE_VERSION_12_1 \
 	CONFIG_NSS_FIRMWARE_VERSION_12_2 \
-	CONFIG_NSS_FIRMWARE_VERSION_12_5 \
-	CONFIG_NSS_FIRMWARE_VERSION_13_0
+	CONFIG_NSS_FIRMWARE_VERSION_12_5
 
 include $(INCLUDE_DIR)/package.mk
 
@@ -72,11 +71,6 @@ define Package/nss-firmware-default/config
     prompt "Version"
     default NSS_FIRMWARE_VERSION_12_5
 
-    config NSS_FIRMWARE_VERSION_13_0
-          bool "NSS Firmware 13.0 Release 245"
-          help
-               This version does NOT work with NSS MESH (802.11s)
-
     config NSS_FIRMWARE_VERSION_12_5
           bool "NSS Firmware 12.5 Release 210"
           help
@@ -115,16 +109,11 @@ else ifneq ($(CONFIG_NSS_FIRMWARE_VERSION_12_2),)
    NSS_MINOR=2
    NSS_REL=161
    VERSION_PATH=$(PKG_BUILD_DIR)/QCA_Networking_2022.SPF_$(NSS_MAJOR).$(NSS_MINOR)/ED1
-else ifneq ($(CONFIG_NSS_FIRMWARE_VERSION_12_5),)
+else
    NSS_MAJOR=12
    NSS_MINOR=5
    NSS_REL=210
    VERSION_PATH=$(PKG_BUILD_DIR)/QCA_Networking_2024.SPF_$(NSS_MAJOR).$(NSS_MINOR)/ED1
-else
-   NSS_MAJOR=13
-   NSS_MINOR=0
-   NSS_REL=245
-   VERSION_PATH=.
 endif
 
 define Build/Compile

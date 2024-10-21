@@ -57,7 +57,7 @@ proto_quectel_setup() {
 			json_get_var cell_lock $idx
 			pci=$(echo $cell_lock | cut -d',' -f1)
 			earfcn=$(echo $cell_lock | cut -d',' -f2)
-			cell_ids="$cell_ids,$earfcn,$pci"
+			cell_ids="$cell_ids,$earfcn,$pci" 
 			idx=$(( idx + 1 ))
 		done
 		idx=$(( idx - 1 ))
